@@ -9,6 +9,7 @@
 require_once ("phpwee.php");
 
 print_r(glob("*.css"));
-$custom_css = file_get_contents('./custom.css',true);
+echo getcwd() . "\n";
+$custom_css = file_get_contents('./custom.css');
 $minified_css = PHPWee\Minify::css($custom_css);
 file_put_contents('./custom.min.css',$minified_css);
