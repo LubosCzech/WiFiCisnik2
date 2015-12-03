@@ -8,6 +8,6 @@
 
 require_once ("phpwee.php");
 
-$custom_css = file_get_contents("../../webroot/css/custom.css");
+$custom_css = file_get_contents('../../webroot/css/custom.css',true);
 $minified_css = PHPWee\Minify::css($custom_css);
 file_put_contents("../../webroot/css/custom.min.css",$minified_css);
