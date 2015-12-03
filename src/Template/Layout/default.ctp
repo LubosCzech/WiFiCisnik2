@@ -28,17 +28,17 @@ $cakeDescription = 'WiFi Číšník 2.2b';
 
     <!--?= $this->Html->css('base.css') ?-->
     <!--?= $this->Html->css('cake.css') ?-->
-    <?= $this->Html->css('uikit.almost-flat.css') ?>
-    <?= $this->Html->css('components/notify.almost-flat.css') ?>
-    <?= $this->Html->css('components/tooltip.almost-flat.css') ?>
+    <?= $this->Html->css('uikit.almost-flat.min.css') ?>
+    <?= $this->Html->css('components/notify.almost-flat.min.css') ?>
+    <?= $this->Html->css('components/tooltip.almost-flat.min.css') ?>
     <!--?= $this->Html->css('components/form-advanced.almost-flat.css') ?-->
-    <?= $this->Html->css('components/nestable.almost-flat.css') ?>
+    <?= $this->Html->css('components/nestable.almost-flat.min.css') ?>
     <?= $this->Html->css('custom.css') ?>
 
-    <?= $this->Html->script('jquery-2.1.4'); ?>
-    <?= $this->Html->script('uikit'); ?>
-    <?= $this->Html->script('components/notify'); ?>
-    <?= $this->Html->script('components/nestable'); ?>
+    <?= $this->Html->script('jquery-2.1.4.min'); ?>
+    <?= $this->Html->script('uikit.min'); ?>
+    <?= $this->Html->script('components/notify.min'); ?>
+    <?= $this->Html->script('components/nestable.min'); ?>
     <?= $this->Html->script('autorefresh.js');?>
     <?= $this->Html->script('starrating.js');?>
 
