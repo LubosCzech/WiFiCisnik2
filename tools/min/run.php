@@ -6,7 +6,7 @@
  * Time: 14:45
  */
 
-require_once ("phpwee.php");
+require_once (getcwd().'/tools/min/phpwee.php');
 
 $custom_css = file_get_contents(getcwd().'/webroot/css/custom.css');
 $minified_css = PHPWee\Minify::css($custom_css);
