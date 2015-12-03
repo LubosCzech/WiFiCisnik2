@@ -9,10 +9,13 @@
 require_once ('phpwee.php');
 
 $custom_css = file_get_contents(getcwd().'/webroot/css/custom.css');
-echo $custom_css;
 $minified_css = PHPWee\Minify::css($custom_css);
 file_put_contents(getcwd().'/webroot/css/custom.min.css',$minified_css);
-echo $minified_css;
+
+
+$autorefresh = file_get_contents(getcwd().'/webroot/js/autorefresh.js');
+$minified_js = PHPWee\Minify::js($autorefresh);
+file_put_contents(getcwd().'/webroot/js/autorefresh.min.js',$minified_js);
 
 
 
