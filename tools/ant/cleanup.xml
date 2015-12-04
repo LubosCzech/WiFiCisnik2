@@ -7,8 +7,36 @@
 
     <target name="clean" description="clean up">
         <!-- Delete the ${build} and ${dist} directory trees -->
-        <echo>current directory: ${basedir}</echo>
+        <delete file="${controllerDir}/CategoryController.php" />
+        <delete file="${controllerDir}/CheckoutController.php" />
+        <delete file="${controllerDir}/ConfigurationController.php" />
+        <delete file="${controllerDir}/GuestController.php" />
+        <delete file="${controllerDir}/LocalizationController.php" />
+        <delete file="${controllerDir}/NewsController.php" />
+        <delete file="${controllerDir}/NoteController.php" />
+        <delete file="${controllerDir}/NotificationController.php" />
+        <delete file="${controllerDir}/OrderGuestController.php" />
+        <delete file="${controllerDir}/OrderMainController.php" />
+        <delete file="${controllerDir}/PlaceController.php" />
+        <delete file="${controllerDir}/ProductController.php" />
+        <delete file="${controllerDir}/ProductOptionController.php" />
+        <delete file="${controllerDir}/RatingController.php" />
+        <delete file="${controllerDir}/StatesController.php" />
         <delete file="${controllerDir}/UserController.php" />
-        <delete dir="../../src/Template/Category" verbose="true"/>
+        <delete dir="${templateDir}/Category"/>
+        <delete dir="${templateDir}/Checkout"/>
+        <delete dir="${templateDir}/Configuration"/>
+        <delete dir="${templateDir}/Guest"/>
+        <delete dir="${templateDir}/Localization"/>
+        <delete dir="${templateDir}/News"/>
+        <delete dir="${templateDir}/Note"/>
+        <delete dir="${templateDir}/Notification"/>
+        <delete dir="${templateDir}/OrderGuest"/>
+        <delete dir="${templateDir}/OrderMain"/>
+        <delete dir="${templateDir}/Place"/>
+        <delete dir="${templateDir}/Product"/>
+        <delete dir="${templateDir}/Rating"/>
+        <delete dir="${templateDir}/States"/>
+        <delete dir="${templateDir}/User"/>
     </target>
 </project>
