@@ -17,7 +17,6 @@ $minified_css = PHPWee\Minify::css($css);
 file_put_contents(getcwd().'/webroot/css/cake.min.css',$minified_css);
 
 
-
 $js = file_get_contents(getcwd().'/webroot/js/autorefresh.js');
 $minified_js = PHPWee\Minify::js($js);
 file_put_contents(getcwd().'/webroot/js/autorefresh.min.js',$minified_js);
@@ -32,6 +31,11 @@ $str=str_replace("autorefresh.js", "autorefresh.min.js",$default);
 $str=str_replace("starrating.js", "starrating.min.js",$default);
 
 file_put_contents(getcwd().'/src/Template/Layout/default.ctp',$str);
+
+$html = file_get_contents(getcwd().'/src/Template/Element/archive_container.ctp');
+$minified_html = PHPWee\Minify::js($html);
+file_put_contents(getcwd().'/src/Template/Element/archive_container.ctp',$minified_html);
+
 
 
 
