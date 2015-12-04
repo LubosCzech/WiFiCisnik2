@@ -32,9 +32,32 @@ $str=str_replace("starrating.js", "starrating.min.js",$default);
 
 file_put_contents(getcwd().'/src/Template/Layout/default.ctp',$str);
 
-$html = file_get_contents(getcwd().'/src/Template/Element/archive_container.ctp');
-$minified_html = PHPWee\Minify::js($html);
-file_put_contents(getcwd().'/src/Template/Element/archive_container.ctp',$minified_html);
+minHtml('/src/Template/Element/archive_container.ctp');
+minHtml('/src/Template/Element/cart_container.ctp');
+minHtml('/src/Template/Element/category_container.ctp');
+minHtml('/src/Template/Element/checkout_container.ctp');
+minHtml('/src/Template/Element/header.ctp');
+minHtml('/src/Template/Element/menu_bottom.ctp');
+minHtml('/src/Template/Element/menu_config.ctp');
+minHtml('/src/Template/Element/menu_container.ctp');
+minHtml('/src/Template/Element/modals.ctp');
+minHtml('/src/Template/Element/news_container.ctp');
+minHtml('/src/Template/Element/orders_container.ctp');
+minHtml('/src/Template/Element/pagination.ctp');
+minHtml('/src/Template/Element/place_container.ctp');
+minHtml('/src/Template/Element/product_container.ctp');
+minHtml('/src/Template/Element/rating_container.ctp');
+minHtml('/src/Template/Element/restaurant_adv_container.ctp');
+minHtml('/src/Template/Element/restaurant_config.ctp');
+minHtml('/src/Template/Element/restaurant_container.ctp');
+
+minHtml('/src/Template/Layout/default.ctp');
+
+function minHtml($path){
+    $html = file_get_contents(getcwd().$path);
+    $minified_html = PHPWee\Minify::html($html);
+    file_put_contents(getcwd().$path,$minified_html);
+}
 
 
 
