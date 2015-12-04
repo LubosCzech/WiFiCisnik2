@@ -9,6 +9,6 @@
         <!-- Delete the ${build} and ${dist} directory trees -->
         <echo>current directory: ${basedir}</echo>
         <delete file="${controllerDir}/UserController.php" />
-        <delete dir="src/Template/Category" verbose="true"/>
+        <delete dir="../../src/Template/Category" verbose="true"/>
     </target>
 </project>
