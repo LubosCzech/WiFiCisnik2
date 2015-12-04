@@ -32,7 +32,7 @@ $str=str_replace("starrating.js", "starrating.min.js",$default);
 
 file_put_contents(getcwd().'/src/Template/Layout/default.ctp',$str);
 
-minHtml('/src/Template/Element/archive_container.ctp');
+/*minHtml('/src/Template/Element/archive_container.ctp');
 minHtml('/src/Template/Element/cart_container.ctp');
 minHtml('/src/Template/Element/category_container.ctp');
 minHtml('/src/Template/Element/checkout_container.ctp');
@@ -49,7 +49,7 @@ minHtml('/src/Template/Element/product_container.ctp');
 minHtml('/src/Template/Element/rating_container.ctp');
 minHtml('/src/Template/Element/restaurant_adv_container.ctp');
 minHtml('/src/Template/Element/restaurant_config.ctp');
-minHtml('/src/Template/Element/restaurant_container.ctp');
+minHtml('/src/Template/Element/restaurant_container.ctp');*/
 
 minHtml('/src/Template/Layout/default.ctp');
 
