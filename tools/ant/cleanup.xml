@@ -1,4 +1,4 @@
-<project name="WiFiCisniik" default="dist" basedir=".">
+<project name="WiFiCisnik" basedir=".">
     <!-- set global properties for this build -->
     <property name="controllerDir" location="src/Controller"/>
     <property name="templateDir" location="src/Template"/>
