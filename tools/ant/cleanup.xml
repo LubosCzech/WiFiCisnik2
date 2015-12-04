@@ -1,9 +1,9 @@
 <project name="WiFiCisnik" default="clean" basedir=".">
     <!-- set global properties for this build -->
-    <property name="controllerDir" location="src/Controller"/>
-    <property name="templateDir" location="src/Template"/>
-    <property name="cssDir" location="webroot/css"/>
-    <property name="cssDir" location="webroot/js"/>
+    <property name="controllerDir" location="../../src/Controller"/>
+    <property name="templateDir" location="../../src/Template"/>
+    <property name="cssDir" location="../../webroot/css"/>
+    <property name="cssDir" location="../../webroot/js"/>
 
     <target name="clean" description="clean up">
         <!-- Delete the ${build} and ${dist} directory trees -->
