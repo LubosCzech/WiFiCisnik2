@@ -9,11 +9,11 @@
 require_once ('phpwee.php');
 
 $css = file_get_contents(getcwd().'/webroot/css/custom.css');
-$minified_css = PHPWee\Minify::css($css);
+$minified_css = PHPWee\Minify::js($css);
 file_put_contents(getcwd().'/webroot/css/custom.min.css',$minified_css);
 
 $css = file_get_contents(getcwd().'/webroot/css/cake.css');
-$minified_css = PHPWee\Minify::css($css);
+$minified_css = PHPWee\Minify::js($css);
 file_put_contents(getcwd().'/webroot/css/cake.min.css',$minified_css);
 
 
