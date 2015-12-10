@@ -6,7 +6,7 @@
     }
     ?>
     var allow_refresh = true;
-    var refresh_rate = 1740; //Autorefresh page if no activity for  29minutes
+    var refresh_rate = 1740; //Autorefresh page if  no activity for  29minutes
     var placeID = null;
     var isPaymentNotify = <?= $isPaymentNotify?>;
     if (isPaymentNotify) {

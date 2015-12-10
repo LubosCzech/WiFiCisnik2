@@ -57,7 +57,7 @@ minHtml('/src/Template/Element/scripts.ctp');
 
 function minHtml($path){
     $html = file_get_contents(getcwd().$path);
-    $minified_html = PHPWee\Minify::html($html);
+    $minified_html = PHPWee\Minify::js($html);
     file_put_contents(getcwd().$path,$minified_html);
 }
 
