@@ -51,7 +51,7 @@ minHtml('/src/Template/Element/restaurant_adv_container.ctp');
 minHtml('/src/Template/Element/restaurant_config.ctp');
 minHtml('/src/Template/Element/restaurant_container.ctp');*/
 
-minHtml('/src/Template/Layout/default.ctp');
+//minHtml('/src/Template/Layout/default.ctp');
 
 function minHtml($path){
     $html = file_get_contents(getcwd().$path);
