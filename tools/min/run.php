@@ -26,7 +26,7 @@ $minified_js = PHPWee\Minify::js($js);
 file_put_contents(getcwd().'/webroot/js/starrating.min.js',$minified_js);
 
 
-$default = file_get_contents(getcwd().'/src/Template/Layout/default.ctp');
+$default = htmlentities(file_get_contents(getcwd().'/src/Template/Layout/default.ctp'));
 $str=str_replace("autorefresh.js", "autorefresh.min.js",$default);
 $str=str_replace("starrating.js", "starrating.min.js",$default);
 
