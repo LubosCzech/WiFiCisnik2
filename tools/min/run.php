@@ -32,7 +32,7 @@ $str=str_replace("starrating.js", "starrating.min.js",$default);
 
 file_put_contents(getcwd().'/src/Template/Layout/default.ctp',$str);
 
-pr($str);
+echo($str);
 
 /*minHtml('/src/Template/Element/archive_container.ctp');
 minHtml('/src/Template/Element/cart_container.ctp');
