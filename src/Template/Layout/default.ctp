@@ -28,7 +28,8 @@ $cakeDescription = 'WiFi Číšník 2.2b';
 
     <!--?= $this->Html->css('base.css') ?-->
     <!--?= $this->Html->css('cake.css') ?-->
-    <?= $this->Html->css('uikit.almost-flat.min.css') ?>
+    <?= $this->Html->css('uikit.almost-flat.css') ?>
+    <?= $this->Html->css('uikit.css') ?>
     <?= $this->Html->css('components/notify.almost-flat.min.css') ?>
     <?= $this->Html->css('components/tooltip.almost-flat.min.css') ?>
     <!--?= $this->Html->css('components/form-advanced.almost-flat.css') ?-->

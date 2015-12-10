@@ -1,4 +1,4 @@
-/*! UIkit 2.22.0 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
+/*! UIkit 2.24.2 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
 /* ========================================================================
    Component: Tooltip
  ========================================================================== */
@@ -38,8 +38,7 @@
   width: 0;
   height: 0;
   /* 1 */
-  /*#333333*/
-  border: 5px dashed #e22a1d;
+  border: 5px dashed #333333;
 }
 /* Direction modifiers
  ========================================================================== */
@@ -54,7 +53,7 @@
   border-bottom: none;
   border-left-color: transparent;
   border-right-color: transparent;
-  border-top-color: #e22a1d;
+  border-top-color: #333333;
 }
 /*
  * Bottom
@@ -67,7 +66,7 @@
   border-top: none;
   border-left-color: transparent;
   border-right-color: transparent;
-  border-bottom-color: #e22a1d;
+  border-bottom-color: #333333;
 }
 /*
  * Top/Bottom center
@@ -102,7 +101,7 @@
   border-right: none;
   border-top-color: transparent;
   border-bottom-color: transparent;
-  border-left-color: #e22a1d;
+  border-left-color: #333333;
 }
 /*
  * Right
@@ -115,5 +114,5 @@
   border-left: none;
   border-top-color: transparent;
   border-bottom-color: transparent;
-  border-right-color: #e22a1d;
+  border-right-color: #333333;
 }

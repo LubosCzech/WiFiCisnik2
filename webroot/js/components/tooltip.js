@@ -1,4 +1,4 @@
-/*! UIkit 2.22.0 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
+/*! UIkit 2.24.2 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
 (function(addon) {
     var component;
 
@@ -59,7 +59,7 @@
             var $this = this;
 
             if (!$tooltip) {
-                $tooltip = UI.$('<div class="uk-tooltip" id="tooltip"></div>').appendTo("body");
+                $tooltip = UI.$('<div class="uk-tooltip"></div>').appendTo("body");
             }
 
             this.on({

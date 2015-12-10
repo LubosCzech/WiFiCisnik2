@@ -1,4 +1,4 @@
-/*! UIkit 2.22.0 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
+/*! UIkit 2.24.2 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
 (function(addon) {
 
     var component;
@@ -30,7 +30,7 @@
                 months        : ['January','February','March','April','May','June','July','August','September','October','November','December'],
                 weekdays      : ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
             },
-            format: "DD.MM.YYYY",
+            format: "YYYY-MM-DD",
             offsettop: 5,
             maxDate: false,
             minDate: false,
@@ -207,7 +207,7 @@
             var offset = this.element.offset(),
                 css    = {"left": offset.left, "right":""};
 
-            this.current  = initdate ? moment(initdate, this.options.format):moment();
+            this.current  = isNaN(initdate) ? moment(initdate, this.options.format):moment();
             this.initdate = this.current.format("YYYY-MM-DD");
 
             this.update();

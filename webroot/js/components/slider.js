@@ -1,4 +1,4 @@
-/*! UIkit 2.22.0 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
+/*! UIkit 2.24.2 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
 (function(addon) {
 
     var component;
@@ -38,11 +38,11 @@
 
                 setTimeout(function(){
 
-                    UI.$("[data-uk-slider]", context).each(function(){
+                    UI.$('[data-uk-slider]', context).each(function(){
 
                         var ele = UI.$(this);
 
-                        if (!ele.data("slider")) {
+                        if (!ele.data('slider')) {
                             UI.slider(ele, UI.Utils.options(ele.attr('data-uk-slider')));
                         }
                     });
@@ -58,11 +58,11 @@
             this.container = this.element.find('.uk-slider');
             this.focus     = 0;
 
-            UI.$win.on("resize load", UI.Utils.debounce(function() {
+            UI.$win.on('resize load', UI.Utils.debounce(function() {
                 $this.resize(true);
             }, 100));
 
-            this.on("click.uikit.slider", '[data-uk-slider-item]', function(e) {
+            this.on('click.uikit.slider', '[data-uk-slider-item]', function(e) {
 
                 e.preventDefault();
 
@@ -84,6 +84,7 @@
             });
 
             this.container.on({
+
                 'touchstart mousedown': function(evt) {
 
                     if (evt.originalEvent && evt.originalEvent.touches) {
@@ -137,6 +138,7 @@
                     delayIdle.threshold = $this.options.threshold;
 
                 },
+
                 mouseenter: function() { if ($this.options.pauseOnHover) $this.hovering = true;  },
                 mouseleave: function() { $this.hovering = false; }
             });
@@ -269,13 +271,22 @@
 
                                 area += this.items.eq(i).data('width');
 
-                                if (area >= this.vp) {
+                                if (area == this.vp) {
                                     idx = i;
+                                    break;
+                                }
+
+                                if (area > this.vp) {
+                                    idx = (i < this.items.length-1) ? i+1 : i;
                                     break;
                                 }
                             }
 
-                            this.updatePos(this.items.eq(idx).data('left')*-1);
+                            if (area > this.vp) {
+                                this.updatePos((this.container.width() - this.vp) * -1);
+                            } else {
+                                this.updatePos(this.items.eq(idx).data('left')*-1);
+                            }
                         }
                     }
                 }

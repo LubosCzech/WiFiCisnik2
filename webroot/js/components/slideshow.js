@@ -1,4 +1,4 @@
-/*! UIkit 2.22.0 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
+/*! UIkit 2.24.2 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
 (function(addon) {
 
     var component;
@@ -105,7 +105,14 @@
 
                             var cover = UI.$('<div class="uk-cover-background uk-position-cover"></div>').css({'background-image':'url('+ media.attr('src') + ')'});
 
-                            media.css({'width': '100%','height': 'auto'});
+                            if (media.attr('width') && media.attr('height')) {
+                                placeholder = UI.$('<canvas></canvas>').attr({width:media.attr('width'), height:media.attr('height')});
+                                media.replaceWith(placeholder);
+                                media = placeholder;
+                                placeholder = undefined;
+                            }
+
+                            media.css({width: '100%',height: 'auto', opacity:0});
                             slide.prepend(cover).data('cover', cover);
                             break;
 
@@ -305,7 +312,7 @@
 
                     UI.Utils.checkDisplay(next, '[class*="uk-animation-"]:not(.uk-cover-background.uk-position-cover)');
 
-                    $this.trigger('show.uk.slideshow', [next]);
+                    $this.trigger('show.uk.slideshow', [next, current, $this]);
                 };
 
             $this.applyKenBurns(next);
@@ -317,6 +324,8 @@
 
             current = UI.$(current);
             next    = UI.$(next);
+
+            $this.trigger('beforeshow.uk.slideshow', [next, current, $this]);
 
             Animations[animation].apply(this, [current, next, dir]).then(finalize);
 
@@ -345,11 +354,11 @@
         },
 
         next: function() {
-            this.show(this.slides[this.current + 1] ? (this.current + 1) : 0);
+            this.show(this.slides[this.current + 1] ? (this.current + 1) : 0, 1);
         },
 
         previous: function() {
-            this.show(this.slides[this.current - 1] ? (this.current - 1) : (this.slides.length - 1));
+            this.show(this.slides[this.current - 1] ? (this.current - 1) : (this.slides.length - 1), -1);
         },
 
         start: function() {
@@ -501,6 +510,14 @@
             next.css('animation-duration', this.options.duration+'ms');
 
             next.css('opacity', 1);
+
+            // for plain text content slides - looks smoother
+            if (!(next.data('cover') || next.data('placeholder'))) {
+
+                next.css('opacity', 1).one(UI.support.animation.end, function() {
+                    next.removeClass('uk-slideshow-fade-in');
+                }).addClass('uk-slideshow-fade-in');
+            }
 
             current.one(UI.support.animation.end, function() {
 
