@@ -1,0 +1,52 @@
+<project name="WiFiCisnik" default="prod" basedir=".">
+
+    <target name="-load.properties"
+            description="Set properties for this build">
+        <!--YUI Compressor location-->
+        <property name="yui.dir" value="${basedir}/yuicompressor-2.4.8.jar"/>
+        <property name="cssDir" location="../../webroot/css"/>
+        <property name="jsDir" location="../../webroot/js"/>
+    </target>
+    <!--Minify JS files-->
+    <target name="-js.minify" description="Minifies JavaScript files">
+        <apply executable="java" parallel="false" dest="${jsDir}">
+            <fileset
+                    dir="${jsDir}"
+                    includes="autorefresh.js"/>
+            <arg line="-jar"/>
+            <arg path="${yui.dir}"/>
+            <srcfile/>
+            <arg line="-o"/>
+            <mapper type="glob" from="*.js" to="*-min.js"/>
+            <targetfile/>
+        </apply>
+        <echo>Finished</echo>
+    </target>
+
+    <!--Minify CSS files-->
+    <target name="-css.minify" description="Minifies CSS files">
+        <apply executable="java" parallel="false"  dest="${build.dir}/css">
+            <fileset
+                    dir="${cssDir}"
+                    includes="custom.css"/>
+            <arg line="-jar"/>
+            <arg path="${yui.dir}"/>
+            <arg line="--line-break 0"/>
+            <srcfile/>
+            <arg line="-o"/>
+            <mapper type="glob" from="*.css" to="*-min.css"/>
+            <targetfile/>
+        </apply>
+        <echo>Finished</echo>
+    </target>
+
+
+    <!--Build-->
+    <target name="prod"
+            description="Builds project files for production use"
+            depends="
+            -load.properties,
+            -js.minify,
+            -css.minify">
+    </target>
+</project>
