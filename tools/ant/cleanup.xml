@@ -33,11 +33,24 @@
         <delete dir="${templateDir}/Notification"/>
         <delete dir="${templateDir}/OrderGuest"/>
         <delete dir="${templateDir}/OrderMain"/>
+        <delete dir="${templateDir}/OrderProduct"/>
         <delete dir="${templateDir}/Place"/>
         <delete dir="${templateDir}/Product"/>
         <delete dir="${templateDir}/ProductOption"/>
         <delete dir="${templateDir}/Rating"/>
         <delete dir="${templateDir}/States"/>
         <delete dir="${templateDir}/User"/>
+        <delete file="${templateDir}/Restaurant/index.ctp"/>
+        <delete file="${templateDir}/Restaurant/add.ctp"/>
+        <delete file="${templateDir}/Restaurant/edit.ctp"/>
+        <delete file="${templateDir}/Restaurant/view.ctp"/>
+        <delete file="${templateDir}/Menu/add.ctp"/>
+        <delete file="${templateDir}/Menu/edit.ctp"/>
+        <delete file="${templateDir}/Menu/view.ctp"/>
+        <delete file="${templateDir}/Menu/index_adm.ctp"/>
+        <delete file="${templateDir}/Payment/index.ctp"/>
+        <delete file="${templateDir}/Payment/add.ctp"/>
+        <delete file="${templateDir}/Payment/edit.ctp"/>
+        <delete file="${templateDir}/Payment/view.ctp"/>
     </target>
 </project>
