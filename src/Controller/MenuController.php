@@ -30,10 +30,20 @@ class MenuController extends AppController
 
         $session = $this->request->session();
 
+        if($session->check('Guest')){
+            $this->Cookie->write('WiFiCisnik.RestaurantID',$session->read('Guest.RestaurantID'));
+            $this->Cookie->write('WiFiCisnik.Language',$session->read('Guest.Language'));
+        }
+
         if (!$this->Cookie->check('WiFiCisnik.RestaurantID')) {
-            $this->set('isRestaurantID', 'false');
+            //$this->set('isRestaurantID', 'false');
         } else {
-            $this->set('isRestaurantID', 'true');
+            //$this->set('isRestaurantID', 'true');
+        }
+
+        if(!$this->Cookie->check('WiFiCisnik.RestaurantID')){
+            $this->Cookie->write('WiFiCisnik.RestaurantID',$this->request->query('restID'));
+            $this->Cookie->write('WiFiCisnik.Language',$this->request->query('lang'));
         }
 
         $restaurant_id = $this->Cookie->read('WiFiCisnik.RestaurantID');
@@ -80,6 +90,15 @@ class MenuController extends AppController
                         $this->set('isCart', 'false');
                         $this->set('isEmpty','true');
                     }
+
+                    $language = $this->Cookie->read('WiFiCisnik.Language');
+                    $localization = $this->Localization->find()->combine('Code', $language);
+                    $languageText = array();
+                    foreach ($localization as $code => $text){
+                        $languageText[$code] = $text;
+                    }
+                    $this->set('localization',$languageText);
+
                     $this->render('../Element/cart_container');
                     return;
                 }
@@ -123,6 +142,15 @@ class MenuController extends AppController
                 $this->set('cart', $session->read('Cart'));
                 $this->set('isNewProductInCart', 'true');
                 $this->set('lastActiveCategory',$category_active);
+
+                $language = $this->Cookie->read('WiFiCisnik.Language');
+                $localization = $this->Localization->find()->combine('Code', $language);
+                $languageText = array();
+                foreach ($localization as $code => $text){
+                    $languageText[$code] = $text;
+                }
+                $this->set('localization',$languageText);
+
                 $this->render('/Element/cart_container');
             }
         }

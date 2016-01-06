@@ -1,9 +1,9 @@
 <table class="uk-table uk-table-condensed">
     <thead>
     <tr>
-        <th>Produkt</th>
-        <th>Počet</th>
-        <th>Cena</th>
+        <th><?= $localization['txt_product'] ?></th>
+        <th><?= $localization['txt_count'] ?></th>
+        <th><?= $localization['txt_price'] ?></th>
         <th></th>
     </tr>
     </thead>
@@ -23,7 +23,7 @@
     } else {
         if (isset($isEmpty) && $isEmpty) {
             echo('<script language="JavaScript"> ');
-            echo('UIkit.notify("<i class=\'uk-icon-warning\'></i> Košík byl vyprázdněn", {status: \'warning\'});');
+            echo('UIkit.notify("<i class=\'uk-icon-warning\'></i> '.$localization['note_cart_empty'].'", {status: \'warning\'});');
             echo('var modal = UIkit.modal("#modal_cart");
                    modal.hide();');
             echo('var emptyCart=true;');
@@ -35,7 +35,7 @@
     </tbody>
     <tfoot>
     <tr>
-        <th>Cena celkem</th>
+        <th><?= $localization['txt_price_total'] ?></th>
         <th></th>
         <th><?= $cart_total_price ?> <?= $restaurant->configuration->CurrencySign ?></th>
         <th></th>

@@ -98,7 +98,7 @@
 
         var isFirstEnter = <?= $isFirstEnter; ?>;
         if (isFirstEnter) {
-            UIkit.notify("<i class='uk-icon-check'></i> Vítejte ve <?= $cookieHelper->read('WiFiCisnik.PlaceName');?>", {status: 'success'});
+            UIkit.notify("<i class='uk-icon-check'></i> <?=$localization['note_welcome']?> <?= $cookieHelper->read('WiFiCisnik.PlaceName');?>", {status: 'success'});
         }
 
 
@@ -152,7 +152,7 @@
             $('#modal_product').on({
                 'uk.modal.show': function () {
                     $('h2', $(this)).html(product_name);
-                    $('h3', $(this)).html('Cena: ' + product_price + ' <?=h($restaurant->configuration->CurrencySign);?>');
+                    $('h3', $(this)).html('<?= $localization['txt_price'] ?>: ' + product_price + ' <?=h($restaurant->configuration->CurrencySign);?>');
                     $('p', $(this)).html(product_desc);
                     if (product_img) {
                         $('img', $(this)).attr('src', product_img);
@@ -177,7 +177,7 @@
                 location.reload();
 
             } else {
-                UIkit.notify("<i class='uk-icon-warning'></i> Neplatné číslo nebo kód", {status: 'danger'});
+                UIkit.notify("<i class='uk-icon-warning'></i> <?=$localization['note_wrong_code']?>", {status: 'danger'});
             }
 
         }
@@ -210,7 +210,15 @@
             //get id from pressed button
             var product_id = $(e.target).data('id');
 
-            var thisHref = window.location.href + "?product_id=" + product_id + "&remove=1";
+            //var thisHref = window.location.href + "?product_id=" + product_id + "&remove=1";
+            var thisHref = "<?=
+                    $this->Url->build([
+                        "controller" => "Menu",
+                        "action" => "index",
+                        "remove" => 1
+                    ]);
+                ?>";
+            thisHref = thisHref + "&product_id=" + product_id;
             $('#cart-container').load(thisHref, function () {
                 $(this).fadeTo(200, 1);
             });
@@ -231,7 +239,7 @@
 
                 $('#cart-container').load(post_url + "?add=1", form.serialize(), function (response, status, xhr) {
                     if (status == 'success') {
-                        UIkit.notify("<i class='uk-icon-check'></i> Produkt by přidán do košíku", {status: 'success'});
+                        UIkit.notify("<i class='uk-icon-check'></i> <?=$localization['note_product_added']?>", {status: 'success'});
                         var modal = UIkit.modal("#modal_product");
                         modal.hide();
                     }

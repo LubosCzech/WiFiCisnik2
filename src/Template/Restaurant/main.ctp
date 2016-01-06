@@ -11,7 +11,7 @@
                             $orderLinkText = '<i class="uk-icon-cutlery uk-icon-extralarge"></i><p>'.$localization['main_order'].'</p>';
                         }
                         echo $this->Html->link($orderLinkText,
-                        ['controller' => 'Menu', 'action' => 'index'],
+                        ['controller' => 'Menu', 'action' => 'index','restID' => $restaurant->ID,'lang'=>$language],
                         ['class' => 'uk-panel uk-panel-box uk-panel-box-primary uk-panel-box-primary-hover', 'escapeTitle' => false]
                     ); ?>
                 </div>
@@ -64,13 +64,13 @@
             </li>
             <li class="uk-grid-margin">
                 <div>
-                    <a class="uk-panel uk-panel-box uk-panel-box-primary uk-panel-box-primary-hover" href="">
+                    <a class="uk-panel uk-panel-box uk-panel-box-primary uk-panel-box-primary-hover" href="#modal_guest_config" data-uk-modal="{target:bgclose:false,center:true}">
                         <i class="uk-icon-cogs uk-icon-extralarge"></i>
                         <p><?=$localization['main_configuration']?></p>
                         <?php
                         if($restaurant->configuration->ShowMainBadges):
                         ?>
-                        <div class="uk-panel-badge uk-badge uk-animation-fade uk-animation-1-0">Připravujeme</div>
+                        <div class="uk-panel-badge uk-badge uk-animation-fade uk-animation-1-0">Upravte si WiFiČíšníka</div>
                         <?php
                         endif;
                         ?>
@@ -100,6 +100,7 @@
 <?= $this->fetch('placeid_modal') ?>
 <?= $this->fetch('note_modal') ?>
 <?= $this->fetch('news_modal') ?>
+<?= $this->fetch('guest_config_modal') ?>
 
 <?= $this->element('scripts');?>
 <?= $this->fetch('restaurant_main') ?>

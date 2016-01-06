@@ -159,5 +159,65 @@
             }
         });
     }
+
+    function saveGuestConfig(){
+
+        var targetUrl='<?=$this->Url->build(["controller" => "Restaurant","action" => "saveconfigguestajax","_ext" => "json"]);?>';
+
+
+        var data = $('#form_guest_config').serialize();
+
+        //close modal
+        var modal = UIkit.modal("#modal_guest_config");
+        modal.hide();
+
+
+
+        $.ajax({
+            type: 'post',
+            url: targetUrl,
+            data:  data,
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            },
+            success: function (response) {
+                UIkit.notify("<i class='uk-icon-info'></i> <?=$localization['note_config_save']?>", {status: 'success'});
+                setTimeout(function(){
+                    location.reload(true);
+                }, 2000);
+            },
+            error: function (e) {
+                console.log(e);
+            }
+        });
+    }
+
+    function removeGuestPlace(){
+        var targetUrl='<?=$this->Url->build(["controller" => "Restaurant","action" => "removeplaceguestajax","_ext" => "json"]);?>';
+
+
+        var data = $('#form_guest_config').serialize();
+
+        //close modal
+        var modal = UIkit.modal("#modal_guest_config");
+        modal.hide();
+
+
+
+        $.ajax({
+            type: 'post',
+            url: targetUrl,
+            data:  data,
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            },
+            success: function (response) {
+                UIkit.notify("<i class='uk-icon-info'></i> <?=$localization['note_leave_place']?>", {status: 'success'});
+            },
+            error: function (e) {
+                console.log(e);
+            }
+        });
+    }
 </script>
 <?php $this->end(); ?>

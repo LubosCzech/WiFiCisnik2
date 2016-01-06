@@ -11,7 +11,7 @@
             keyboard: true,
             bgclose: true,
             minScrollHeight: 150,
-            center: false,
+            center: true,
             modal: true
         },
 

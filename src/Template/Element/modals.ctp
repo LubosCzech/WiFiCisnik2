@@ -160,6 +160,44 @@
     </div>
 <?php $this->end(); ?>
 
+<?php $this->start('guest_config_modal'); ?>
+    <div id="modal_guest_config" class="uk-modal" data-uk-observe>
+        <div class="uk-modal-dialog">
+            <button type="button" class="uk-modal-close uk-close"></button>
+            <div class="uk-modal-header">
+                <h2><?= $localization['main_configuration'] ?></h2>
+            </div>
+            <div class="uk-container-center">
+                <form class="uk-form uk-form-horizontal" id="form_guest_config">
+                    <fieldset>
+                        <div class="uk-form-row">
+                            <label class="uk-form-label" for="language"><?= $localization['txt_language'] ?></label>
+                            <div class="uk-form-controls">
+                                <select name="language" class="uk-margin-small-top uk-width-100" id="language">
+                                    <option value="Cz">Čeština</option>
+                                    <option value="En">English</option>
+                                </select>
+                            </div>
+                            </div>
+                            <div class="uk-form-row">
+                                <label class="uk-form-label" for="placeID"><?= ucfirst(h($restaurant->configuration->PlaceText)) ?>: <?= $cookieHelper->read('WiFiCisnik.PlaceName');?></label>
+                                <div class="uk-form-controls">
+                                    <button type="button" class="uk-button uk-button-primary uk-button-large uk-width-100" onclick="removeGuestPlace()">
+                                        <?= $localization['btn_leave'] ?>
+                                    </button>
+                                </div>
+                             </div>
+                    </fieldset>
+            </div>
+            <div class="uk-modal-footer uk-text-center">
+                <button type="button" class="uk-button uk-button-primary uk-button-large" onclick="saveGuestConfig()">
+                    <?= $localization['btn_save'] ?>
+                </button>
+            </div>
+        </div>
+    </div>
+<?php $this->end(); ?>
+
 <?php $this->start('news_edit_modal'); ?>
     <div id="modal_news_edit" class="uk-modal" data-uk-observe>
         <div class="uk-modal-dialog uk-modal-dialog-large">
@@ -330,7 +368,7 @@
                         </div>
                     </div>
                     <div class="uk-form-row">
-                        <label class="uk-form-label" for="price_text">Cena</label>
+                        <label class="uk-form-label" for="price_text"><?= $localization['txt_price'] ?></label>
 
                         <div class="uk-form-controls">
                             <input type="text" name="price_text" id="price_text" placeholder="Cena produktu (bez měny)"
@@ -703,11 +741,11 @@
                     </div>
                 </nav>
             </div>
-            <?php
-
-            echo $this->Form->hidden('sendOrder', ['value' => true]);
-            echo $this->Form->end(); ?>
         </div>
+        <?php
+
+        echo $this->Form->hidden('sendOrder', ['value' => true]);
+        echo $this->Form->end(); ?>
     </div>
 </div>
 <?php $this->end(); ?>

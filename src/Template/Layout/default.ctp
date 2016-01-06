@@ -37,7 +37,7 @@ $cakeDescription = 'WiFi Číšník 2.2b';
     <?= $this->Html->css('custom.css') ?>
 
     <?= $this->Html->script('jquery-2.1.4.min'); ?>
-    <?= $this->Html->script('uikit.min'); ?>
+    <?= $this->Html->script('uikit'); ?>
     <?= $this->Html->script('components/notify.min'); ?>
     <?= $this->Html->script('components/nestable.min'); ?>
     <?= $this->Html->script('autorefresh.js');?>

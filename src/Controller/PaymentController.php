@@ -137,6 +137,12 @@ class PaymentController extends AppController
     {
         $session = $this->request->session();
 
+        if ($session->check('Guest')) {
+            $languageCode = $session->read('Guest.LanguageCode');
+        }else{
+            $languageCode='Cz';
+        }
+
         if ($session->check('WiFiCisnik.Payment')) {
             $guest_order_ID = $session->read('WiFiCisnik.Payment.Order_ID');
             $restaurant_ID = $session->read('WiFiCisnik.Payment.Restaurant_ID');
@@ -175,7 +181,7 @@ class PaymentController extends AppController
                 if($main_order->OrdersCount==1){
                     $this->OrderMain->delete($main_order);
                 }
-                return $this->redirect(['controller' => 'Restaurant', 'action' => 'main', $restaurant->Code]);
+                return $this->redirect(['controller' => 'Restaurant', 'action' => 'main', $restaurant->Code, $languageCode]);
             }
 
             //Disable active user
@@ -197,7 +203,7 @@ class PaymentController extends AppController
             $this->deleteCart($session);
             $session->delete('WiFiCisnik.Payment');
 
-            return $this->redirect(['controller' => 'Restaurant', 'action' => 'main', $restaurant->Code]);
+            return $this->redirect(['controller' => 'Restaurant', 'action' => 'main', $restaurant->Code, $languageCode]);
         }
     }
 

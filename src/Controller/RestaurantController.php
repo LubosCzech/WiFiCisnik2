@@ -175,9 +175,14 @@ class RestaurantController extends AppController
             $restaurant = $rest_query->first();
         }
 
+        if(is_null($restaurant)){
+            return $this->redirect('http://www.wificisnik.cz');
+        }
+
         $this->set('restaurant', $restaurant);
         $this->set('_serialize', ['restaurant']);
 
+        $isLangSet = true;
 
             switch (ucfirst($lang)) {
                 case 'Cz':
@@ -197,12 +202,17 @@ class RestaurantController extends AppController
                     break;
                 default:
                     $language = 'Czech';
+                    $isLangSet=false;
             }
 
-        if($this->Cookie->check('WiFiCisnik.Language')){
-            $language = $this->Cookie->read('WiFiCisnik.Language');
-        }else{
+        if ($isLangSet){
             $this->Cookie->write('WiFiCisnik.Language', $language);
+        }else{
+            if($this->Cookie->check('WiFiCisnik.Language')){
+                $language = $this->Cookie->read('WiFiCisnik.Language');
+            }else{
+                $this->Cookie->write('WiFiCisnik.Language', $language);
+            }
         }
 
         $localization = $this->Localization->find()->combine('Code', $language);
@@ -211,8 +221,13 @@ class RestaurantController extends AppController
             $languageText[$code] = $text;
         }
         $this->set('localization',$languageText);
+        $this->set('language',$language);
 
         $this->Cookie->write('WiFiCisnik.RestaurantID', $restaurant['ID']);
+
+        $session->write('Guest.RestaurantID',$restaurant['ID']);
+        $session->write('Guest.Language',$language);
+        $session->write('Guest.LanguageCode',ucfirst($lang));
     }
 
     public function login(){
@@ -532,6 +547,83 @@ class RestaurantController extends AppController
             $rating->Restaurant_ID = $this->request->data['restaurant_id'];
 
             $this->Rating->Save($rating);
+
+            $this->set('result', array('result' => 'ok'));
+            $this->set('_serialize', array('result'));
+        }
+    }
+
+    public function saveConfigGuestAjax(){
+        if ($this->request->is(array('ajax'))) {
+
+            $lang = $this->request->data['language'];
+
+            switch (ucfirst($lang)) {
+                case 'Cz':
+                    $language = 'Czech';
+                    break;
+                case 'En':
+                    $language = 'English';
+                    break;
+                case 'De':
+                    $language = 'German';
+                    break;
+                case 'Sk':
+                    $language = 'Slovak';
+                    break;
+                case 'Pl':
+                    $language = 'Polish';
+                    break;
+                default:
+                    $language = 'Czech';
+            }
+
+            $this->Cookie->write('WiFiCisnik.Language', $language);
+            $session = $this->request->session();
+
+            $session->write('Guest.Language',$language);
+            $session->write('Guest.LanguageCode',ucfirst($lang));
+
+            $this->set('result', array('result' => 'ok'));
+            $this->set('_serialize', array('result'));
+        }
+    }
+
+    public function removePlaceGuestAjax(){
+        if ($this->request->is(array('ajax'))) {
+
+            if ($this->Cookie->check('WiFiCisnik.GuestID')) {
+                $guestID_cookie = $this->Cookie->read('WiFiCisnik.GuestID');
+                $current_guest = $this->Guest->get($guestID_cookie, [
+                    'contain' => []
+                ]);
+
+                $current_guest->Active = false;
+                $this->Guest->save($current_guest);
+                $this->set('currentUser',$current_guest);
+
+                if ($this->Cookie->check('WiFiCisnik.PlaceID')){
+                    $placeID_cookie = $this->Cookie->read('WiFiCisnik.PlaceID');
+                    $this->Cookie->delete('WiFiCisnik.PlaceID');
+                    $guests_place = $this->Guest
+                        ->find()
+                        ->where(['Place_ID =' => $placeID_cookie, 'Active' => true])
+                        ->toArray()
+                    ;
+
+                    //If no other is active, close main order
+                    if(!$guests_place){
+                        $query = $this->OrderMain->find('all', [
+                            'conditions' => ['OrderMain.Place_ID' => $placeID_cookie, 'OrderMain.OrderState' => 1]
+                        ]);
+                        $main_order = $query->first();
+                        if(!is_null($main_order)){
+                            $main_order->OrderState=2;
+                            $this->OrderMain->save($main_order);
+                        }
+                    }
+                }
+            }
 
             $this->set('result', array('result' => 'ok'));
             $this->set('_serialize', array('result'));
