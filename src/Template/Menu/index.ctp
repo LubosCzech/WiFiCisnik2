@@ -258,6 +258,14 @@
             }).trigger('change');
         });
 
+
+        $(document).ready(function(){
+            $('#input_placeid').keypress(function(e){
+                if(e.keyCode==13)
+                    $('#placeid_ent').click();
+            });
+        });
+
     </script>
 </div>
 <!--JS end -->

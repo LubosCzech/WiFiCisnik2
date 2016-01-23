@@ -2444,7 +2444,7 @@
 
         defaults: {
             keyboard: true,
-            bgclose: true,
+            bgclose: false,
             minScrollHeight: 150,
             center: true,
             modal: true

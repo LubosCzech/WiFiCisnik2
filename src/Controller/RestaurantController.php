@@ -592,6 +592,8 @@ class RestaurantController extends AppController
     public function removePlaceGuestAjax(){
         if ($this->request->is(array('ajax'))) {
 
+            $session = $this->request->session();
+
             if ($this->Cookie->check('WiFiCisnik.GuestID')) {
                 $guestID_cookie = $this->Cookie->read('WiFiCisnik.GuestID');
                 $current_guest = $this->Guest->get($guestID_cookie, [
@@ -623,6 +625,10 @@ class RestaurantController extends AppController
                         }
                     }
                 }
+            }
+
+            if($session->check('Cart')){
+                $session->delete('Cart');
             }
 
             $this->set('result', array('result' => 'ok'));

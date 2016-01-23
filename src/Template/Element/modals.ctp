@@ -10,11 +10,11 @@
             <form class="uk-form uk-text-center">
                 <input id="input_placeid" type="text"
                        placeholder="<?= ucfirst(h($restaurant->configuration->PlaceText)) ?>"
-                       class="uk-margin-small-top uk-form-width-medium">
+                       class="uk-margin-small-top uk-form-width-medium" autofocus="">
             </form>
             </p>
             <div class="uk-modal-footer uk-text-center">
-                <button type="button" class="uk-button uk-button-primary uk-button-large" onclick="notifyWithID()">
+                <button type="button" id="placeid_ent" class="uk-button uk-button-primary uk-button-large" onclick="notifyWithID()">
                     <?= $localization['btn_confirm'] ?>
                 </button>
             </div>
@@ -32,11 +32,11 @@
 
             <form class="uk-form uk-text-center">
                 <input id="input_placeid" type="text" placeholder="<?= ucfirst(h($restaurant->configuration->PlaceText)) ?>"
-                       class="uk-margin-small-top uk-form-width-medium">
+                       class="uk-margin-small-top uk-form-width-medium" autofocus>
             </form>
             </p>
             <div class="uk-modal-footer uk-text-center">
-                <button type="button" class="uk-button uk-button-primary uk-button-large" onclick="checkAndSavePlaceID()">
+                <button type="button" id="placeid_ent" class="uk-button uk-button-primary uk-button-large" onclick="checkAndSavePlaceID()">
                     <?= $localization['btn_confirm'] ?>
                 </button>
             </div>
@@ -182,9 +182,15 @@
                             <div class="uk-form-row">
                                 <label class="uk-form-label" for="placeID"><?= ucfirst(h($restaurant->configuration->PlaceText)) ?>: <?= $cookieHelper->read('WiFiCisnik.PlaceName');?></label>
                                 <div class="uk-form-controls">
-                                    <button type="button" class="uk-button uk-button-primary uk-button-large uk-width-100" onclick="removeGuestPlace()">
-                                        <?= $localization['btn_leave'] ?>
-                                    </button>
+                                    <?php if($cookieHelper->check('WiFiCisnik.PlaceName')):?>
+                                        <button type="button" class="uk-button uk-button-primary uk-button-large uk-width-100" onclick="removeGuestPlace()">
+                                            <?= $localization['btn_leave'] ?>
+                                        </button>
+                                    <?php else: ?>
+                                        <button type="button" class="uk-button uk-button-primary uk-button-large uk-width-100" disabled onclick="removeGuestPlace()">
+                                            <?= $localization['btn_leave'] ?>
+                                        </button>
+                                    <?php endif;?>
                                 </div>
                              </div>
                     </fieldset>
@@ -646,7 +652,7 @@
                             </button>
                         </li>
                         <li><input type="text" id="product_count" name="product_count" placeholder="."
-                                   class="uk-form-width-mini uk-form-large" value="1"></li>
+                                   class="uk-form-width-mini uk-form-large uk-text-center" value="1"></li>
                         <li>
                             <button type="button" class="uk-button uk-button-large" onclick="incrementCount()">+
                             </button>
