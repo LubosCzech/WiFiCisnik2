@@ -151,7 +151,16 @@ class RestaurantController extends AppController
                     ]);
                     $main_order = $query->first();
                     if(!is_null($main_order)){
-                        $main_order->OrderState=2;
+                        //TODO
+                        //Pokud nenajdeme uzivatelskou objednavku s kompletní platbou neuzavirat
+                        $orderGuestUncomplete  = $this->OrderGuest->find('all',[
+                            'conditions'=>['OrderGuest.OrderMain_ID'=>$main_order->ID, 'OrderGuest.PaymentState'=>0]
+                        ])->count();
+                        if($orderGuestUncomplete>0){
+                            $main_order->OrderState=1;
+                        }else{
+                            $main_order->OrderState=2;
+                        }
                         $this->OrderMain->save($main_order);
                     }
                 }
