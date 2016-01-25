@@ -18,6 +18,9 @@ class UserController extends AppController
      */
     public function index()
     {
+        $this->paginate = [
+            'contain' => ['Checkout']
+        ];
         $this->set('user', $this->paginate($this->User));
         $this->set('_serialize', ['user']);
     }
@@ -32,7 +35,7 @@ class UserController extends AppController
     public function view($id = null)
     {
         $user = $this->User->get($id, [
-            'contain' => []
+            'contain' => ['Checkout']
         ]);
         $this->set('user', $user);
         $this->set('_serialize', ['user']);
@@ -55,7 +58,8 @@ class UserController extends AppController
                 $this->Flash->error(__('The user could not be saved. Please, try again.'));
             }
         }
-        $this->set(compact('user'));
+        $checkout = $this->User->Checkout->find('list', ['limit' => 200]);
+        $this->set(compact('user', 'checkout'));
         $this->set('_serialize', ['user']);
     }
 
@@ -80,7 +84,8 @@ class UserController extends AppController
                 $this->Flash->error(__('The user could not be saved. Please, try again.'));
             }
         }
-        $this->set(compact('user'));
+        $checkout = $this->User->Checkout->find('list', ['limit' => 200]);
+        $this->set(compact('user', 'checkout'));
         $this->set('_serialize', ['user']);
     }
 

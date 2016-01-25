@@ -77,6 +77,7 @@
 <?= $this->fetch('category_edit_modal') ?>
 <?= $this->fetch('checkout_edit_modal') ?>
 <?= $this->fetch('place_edit_modal') ?>
+<?= $this->fetch('user_edit_modal') ?>
 
 <?= $this->Html->media(
     array(
@@ -109,6 +110,8 @@
     $(document).on('click', '#checkout_remove', checkoutRemoveLinkHandler);
     $(document).on('click', '#place_link', placeLinkHandler);
     $(document).on('click', '#place_remove', placeRemoveLinkHandler);
+    $(document).on('click', '#user_link', userLinkHandler);
+    $(document).on('click', '#user_remove', userRemoveLinkHandler);
 
     checkAndNotifyNewOrder(true);
 
@@ -665,4 +668,71 @@
                 });
             })
     });
+
+    //USER section
+    function userLinkHandler(e) {
+        //get id from pressed button
+        var user_id = $(e.target).data('id');
+        var user_fullname = $(e.target).data('fullname');
+        var user_login = $(e.target).data('login');
+        var user_password = $(e.target).data('pwd');
+        var user_role = $(e.target).data('role');
+        var user_checkout = $(e.target).data('checkout');
+
+        $('#modal_user_edit').on({
+            'uk.modal.show': function () {
+                document.getElementById("user_fullname").value=user_fullname;
+                document.getElementById("user_login").value=user_login;
+                document.getElementById("user_password").value=user_password;
+                document.getElementById("user_role").value=user_role;
+                document.getElementById("user_checkout").value=user_checkout;
+                document.getElementById("user_id").value=user_id;
+
+            },
+            'uk.modal.hide': function () {
+                //reset all
+                document.getElementById("user_fullname").value="";
+                document.getElementById("user_login").value="";
+                document.getElementById("user_password").value="";
+                document.getElementById("user_role").value="";
+                document.getElementById("user_checkout").value="";
+                document.getElementById("user_id").value="";
+            }
+        }).trigger('uk.modal.show');
+    }
+
+    function userRemoveLinkHandler(e) {
+        //get id from pressed button
+        var user_id = $(e.target).data('id');
+
+        var targetUrl='<?=$this->Url->build(["controller" => "Restaurant","action" => "removeuserajax"]);?>';
+        $('#user-container').load(targetUrl + "?user_id=" + user_id+"&restaurant_id="+"<?=$restaurant->ID?>", function (response, status, xhr) {
+            if (status == 'success') {
+                UIkit.notify("<i class='uk-icon-warning'></i> Uživatel byl smazán", {status: 'danger'});
+            }
+        });
+    }
+
+    $(function () {  
+            $(document).on('submit', '#form_user_edit', function (e) {
+                var form = $(this);
+                e.preventDefault();  
+                var post_url = form.attr('action');  
+
+                $('#user-container').load(post_url, form.serialize(), function (response, status, xhr) {
+                    if (status == 'success') {
+                        UIkit.notify("<i class='uk-icon-check'></i> Uživatel byl uložen", {status: 'success'});
+                        var modal = UIkit.modal("#modal_user_edit");
+                        modal.hide();
+                        document.getElementById("user_fullname").value="";
+                        document.getElementById("user_login").value="";
+                        document.getElementById("user_password").value="";
+                        document.getElementById("user_role").value="";
+                        document.getElementById("user_checkout").value="";
+                        document.getElementById("user_id").value="";
+                    }
+                });
+            })
+    });
+
 </script>

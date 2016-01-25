@@ -367,7 +367,7 @@ class MenuController extends AppController
         $menu = $this->Menu
             ->find()
             ->where(['Restaurant_ID =' => $restaurant_id])
-            ->order(['Category_ID' => 'ASC'])
+            ->order(['Position' => 'ASC'])
             ->toArray();
 
         $menu_tree = $this->createMenu($menu);

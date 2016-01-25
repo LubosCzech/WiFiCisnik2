@@ -221,3 +221,28 @@
     }
 </script>
 <?php $this->end(); ?>
+
+<?php $this->start('restaurant_admin');?>
+    <script language="JavaScript">
+    function saveMenu(){
+        var targetUrl='<?=$this->Url->build(["controller" => "Restaurant","action" => "savemenuajax","_ext" => "json"]);?>';
+
+        var data = $("#menu_tree").data("nestable").serialize();
+
+        $.ajax({
+            type: 'post',
+            url: targetUrl,
+            data:  {list: data},
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            },
+            success: function (response) {
+                UIkit.notify("<i class='uk-icon-info'></i> Menu bylo úspěšně uloženo", {status: 'success'});
+            },
+            error: function (e) {
+                console.log(e);
+            }
+        });
+    }
+    </script>
+<?php $this->end();?>

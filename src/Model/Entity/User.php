@@ -12,6 +12,8 @@ use Cake\ORM\Entity;
  * @property string $Password
  * @property int $Role
  * @property int $Checkout_ID
+ * @property int $Restaurant_ID
+ * @property \App\Model\Entity\Checkout $checkout
  */
 class User extends Entity
 {

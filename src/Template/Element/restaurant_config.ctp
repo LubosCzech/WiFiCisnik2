@@ -4,6 +4,7 @@
         <li><a href="">Rozšířené</a></li>
         <li><a href="">Pokladny</a></li>
         <li><a href="">Místa</a></li>
+        <li><a href="">Uživatelé</a></li>
     </ul>
 </div>
 
@@ -27,6 +28,11 @@
         <li>
             <div id="place-container">
                 <?php echo $this->element('place_container'); ?>
+            </div>
+        </li>
+        <li>
+            <div id="user-container">
+                <?php echo $this->element('user_container'); ?>
             </div>
         </li>
     </ul>

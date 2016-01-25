@@ -2,6 +2,8 @@
     <ul class="side-nav">
         <li class="heading"><?= __('Actions') ?></li>
         <li><?= $this->Html->link(__('New User'), ['action' => 'add']) ?></li>
+        <li><?= $this->Html->link(__('List Checkout'), ['controller' => 'Checkout', 'action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('New Checkout'), ['controller' => 'Checkout', 'action' => 'add']) ?></li>
     </ul>
 </nav>
 <div class="user index large-9 medium-8 columns content">
@@ -15,6 +17,7 @@
                 <th><?= $this->Paginator->sort('Password') ?></th>
                 <th><?= $this->Paginator->sort('Role') ?></th>
                 <th><?= $this->Paginator->sort('Checkout_ID') ?></th>
+                <th><?= $this->Paginator->sort('Restaurant_ID') ?></th>
                 <th class="actions"><?= __('Actions') ?></th>
             </tr>
         </thead>
@@ -27,6 +30,7 @@
                 <td><?= h($user->Password) ?></td>
                 <td><?= $this->Number->format($user->Role) ?></td>
                 <td><?= $this->Number->format($user->Checkout_ID) ?></td>
+                <td><?= $this->Number->format($user->Restaurant_ID) ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['action' => 'view', $user->ID]) ?>
                     <?= $this->Html->link(__('Edit'), ['action' => 'edit', $user->ID]) ?>

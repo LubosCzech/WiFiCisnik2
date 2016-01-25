@@ -13,7 +13,7 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-$cakeDescription = 'WiFi Číšník 2.2b';
+$cakeDescription = 'WiFi Číšník 2.2.5';
 ?>
 <!DOCTYPE html>
 <html>
@@ -34,12 +34,14 @@ $cakeDescription = 'WiFi Číšník 2.2b';
     <?= $this->Html->css('components/tooltip.almost-flat.min.css') ?>
     <!--?= $this->Html->css('components/form-advanced.almost-flat.css') ?-->
     <?= $this->Html->css('components/nestable.almost-flat.min.css') ?>
+    <?= $this->Html->css('components/form-password.almost-flat.min.css') ?>
     <?= $this->Html->css('custom.css') ?>
 
     <?= $this->Html->script('jquery-2.1.4.min'); ?>
     <?= $this->Html->script('uikit'); ?>
     <?= $this->Html->script('components/notify.min'); ?>
     <?= $this->Html->script('components/nestable.min'); ?>
+    <?= $this->Html->script('components/form-password.min'); ?>
     <?= $this->Html->script('autorefresh.js');?>
     <?= $this->Html->script('starrating.js');?>
 

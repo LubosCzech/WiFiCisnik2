@@ -156,7 +156,7 @@ class RestaurantController extends AppController
                         $orderGuestUncomplete  = $this->OrderGuest->find('all',[
                             'conditions'=>['OrderGuest.OrderMain_ID'=>$main_order->ID, 'OrderGuest.PaymentState'=>0]
                         ])->count();
-                        if($orderGuestUncomplete>0){
+                        if($orderGuestUncomplete>0 && $main_order->OrdersCount==1){
                             $main_order->OrderState=1;
                         }else{
                             $main_order->OrderState=2;
@@ -424,9 +424,15 @@ class RestaurantController extends AppController
         $this->set('allowedPlaces',$place_ids);
         $this->set('loggedUser',$logged_user);
 
+        $restaurant_id_cookie = $this->Cookie->read('WiFiCisnik.Admin.RestaurantID');
+
+        $allUsers = $this->User->find('all')->where(['Restaurant_ID'=>$restaurant_id_cookie]);
+
+        $this->set('allUsers',$allUsers);
+
         $products = $this->Product
             ->find()
-            ->where(['Restaurant_ID' => $this->Cookie->read('WiFiCisnik.Admin.RestaurantID')
+            ->where(['Restaurant_ID' => $restaurant_id_cookie
             ]);
 
         if($this->request->query('model')=='Products')
@@ -452,7 +458,7 @@ class RestaurantController extends AppController
         $menu = $this->Menu
             ->find()
             ->where(['Restaurant_ID =' => $this->Cookie->read('WiFiCisnik.Admin.RestaurantID')])
-            ->order(['Category_ID' => 'ASC'])
+            ->order(['Position' => 'ASC'])
             ->toArray();
 
 
@@ -1150,6 +1156,70 @@ class RestaurantController extends AppController
         }
     }
 
+
+
+    public function saveMenuAjax(){
+        if ($this->request->is(array('ajax'))) {
+
+            $menu_tree = $this->request->data['list'];
+            $restaurant_id = $this->Cookie->read('WiFiCisnik.Admin.RestaurantID');
+
+
+            $menu_to_delete = $this->Menu->find('all')->where(['Restaurant_ID'=> $restaurant_id]);
+            foreach($menu_to_delete as $menu_del){
+                    $this->Menu->delete($menu_del);
+            }
+
+
+            //$this->set('changedMenu',$menu_tree);
+
+            $pos = 0;
+            foreach($menu_tree as $menu_cat){
+                $cat_id = $menu_cat['id'];
+                $this->set('cat_id',$cat_id);
+                $this->set('changedMenu',$menu_cat);
+                foreach($menu_cat['children'] as $menu_product){
+                    $menu_row = $this->Menu->newEntity();
+                    $menu_row->Restaurant_ID = $restaurant_id;
+                    $menu_row->Category_ID = $cat_id;
+                    $menu_row->Product_ID = $menu_product['id'];
+                    $menu_row->Position = $pos;
+                    $this->Menu->Save($menu_row);
+                    $pos++;
+                }
+            }
+
+            $rest_query = $this->Restaurant
+                ->find()
+                ->where(['Restaurant.ID' => $restaurant_id])
+                ->contain(['Configuration']);
+
+            $restaurant = $rest_query->first();
+
+            $this->set('restaurant',$restaurant);
+
+            $user_id = $this->Cookie->read('WiFiCisnik.Admin.UserID');
+            $logged_user = $this->User->get($user_id, [
+                'contain' => []
+            ]);
+            $this->set('loggedUser',$logged_user);
+
+            $menu = $this->Menu
+                ->find()
+                ->where(['Restaurant_ID =' => $this->Cookie->read('WiFiCisnik.Admin.RestaurantID')])
+                ->order(['Position' => 'ASC'])
+                ->toArray();
+
+
+            $menu_tree = $this->createMenu($menu);
+            $this->set('menu', $menu_tree);
+
+            $this->set('result', array('result' => 'ok'));
+            $this->set('_serialize', array('result'));
+            $this->render('../Element/menu_container');
+        }
+    }
+
     public function saveRestaurantAjax(){
         if ($this->request->is(array('ajax'))) {
 
@@ -1211,6 +1281,109 @@ class RestaurantController extends AppController
             $this->set('result', array('result' => 'ok'));
             $this->set('_serialize', array('result'));
             $this->render('../Element/restaurant_adv_container');
+        }
+    }
+
+    public function saveUserAjax(){
+        if ($this->request->is(array('ajax'))) {
+
+            if($this->request->query['user_id'] && $this->request->query['user_id']!=""){
+                $user = $this->User->get($this->request->query['user_id'], ['contain' => []]);
+            }else{
+                $user = $this->User->newEntity();
+                $user->Restaurant_ID = $this->request->query['restaurant_id'];
+            }
+
+            $user->FullName = $this->request->query['user_fullname'];
+            $user->Login = $this->request->query['user_login'];
+            $user->Password = $this->request->query['user_password'];
+            $user->Role = $this->request->query['user_role'];
+            $user->Checkout_ID = $this->request->query['user_checkout'];
+
+
+            $this->User->Save($user);
+
+            $checkout = $this->Checkout
+                ->find()
+                ->where(['Restaurant_ID =' => $this->request->query['restaurant_id']])
+                ->order(['ID' => 'ASC'])
+                ->toArray();
+
+            $this->set('checkout', $checkout);
+
+            $allUsers = $this->User
+                ->find()
+                ->where(['Restaurant_ID =' => $this->request->query['restaurant_id']])
+                ->order(['ID' => 'ASC'])
+                ->toArray();
+
+            $this->set('allUsers', $allUsers);
+
+
+            $rest_query = $this->Restaurant
+                ->find()
+                ->where(['Restaurant.ID' => $this->request->query['restaurant_id']])
+                ->contain(['Configuration']);
+
+            $restaurant = $rest_query->first();
+
+            $this->set('restaurant',$restaurant);
+
+            $user_id = $this->Cookie->read('WiFiCisnik.Admin.UserID');
+            $logged_user = $this->User->get($user_id, [
+                'contain' => []
+            ]);
+            $this->set('loggedUser',$logged_user);
+
+            $this->set('result', array('result' => 'ok'));
+            $this->set('_serialize', array('result'));
+            $this->render('../Element/user_container');
+        }
+    }
+
+    public function removeUserAjax(){
+        if ($this->request->is(array('ajax'))) {
+
+            if($this->request->query['user_id'] && $this->request->query['user_id']!=""){
+                $user = $this->User->get($this->request->query['user_id'], ['contain' => []]);
+            }
+            $this->User->delete($user);
+
+            $checkout = $this->Checkout
+                ->find()
+                ->where(['Restaurant_ID =' => $this->request->query['restaurant_id']])
+                ->order(['ID' => 'ASC'])
+                ->toArray();
+
+            $this->set('checkout', $checkout);
+
+            $allUsers = $this->User
+                ->find()
+                ->where(['Restaurant_ID =' => $this->request->query['restaurant_id']])
+                ->order(['ID' => 'ASC'])
+                ->toArray();
+
+            $this->set('allUsers', $allUsers);
+
+
+            $rest_query = $this->Restaurant
+                ->find()
+                ->where(['Restaurant.ID' => $this->request->query['restaurant_id']])
+                ->contain(['Configuration']);
+
+            $restaurant = $rest_query->first();
+
+            $this->set('restaurant',$restaurant);
+
+            $user_id = $this->Cookie->read('WiFiCisnik.Admin.UserID');
+            $logged_user = $this->User->get($user_id, [
+                'contain' => []
+            ]);
+            $this->set('loggedUser',$logged_user);
+
+            $this->set('result', array('result' => 'ok'));
+            $this->set('_serialize', array('result'));
+            $this->render('../Element/user_container');
         }
     }
 }

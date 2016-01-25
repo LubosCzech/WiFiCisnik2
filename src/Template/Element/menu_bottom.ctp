@@ -25,7 +25,9 @@
             </ul>
         </div>
 
-        <div class="uk-navbar-content uk-navbar-center">WiFi Číšník 2.2b</div>
+        <div class="uk-navbar-content uk-navbar-center">
+            <?= $this->Html->image('dv_logo.png', ['alt' => 'WiFi Číšník by DEEP VISION s.r.o.', 'id' => 'logo_bottom']); ?>
+        </div>
 
     </nav>
 </section>

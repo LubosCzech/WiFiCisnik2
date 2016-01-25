@@ -374,7 +374,7 @@
                         </div>
                     </div>
                     <div class="uk-form-row">
-                        <label class="uk-form-label" for="price_text"><?= $localization['txt_price'] ?></label>
+                        <label class="uk-form-label" for="price_text">Cena</label>
 
                         <div class="uk-form-controls">
                             <input type="text" name="price_text" id="price_text" placeholder="Cena produktu (bez měny)"
@@ -583,8 +583,11 @@
                         <label class="uk-form-label" for="place_checkout">Pokladna</label>
 
                         <div class="uk-form-controls">
-                            <input type="text" name="place_checkout" id="place_checkout" placeholder="ID pokladny"
-                                   class="uk-form-width-large">
+                            <select name="place_checkout" class="uk-form-width-large" id="place_checkout">
+                                <?php foreach($checkout as $checkout_item):?>
+                                    <option value="<?=$checkout_item->ID?>"><?=$checkout_item->Name?></option>
+                                <?php endforeach;?>
+                            </select>
                         </div>
                     </div>
                 </fieldset>
@@ -709,10 +712,10 @@
                     <select name="payMethod" class="uk-margin-small-top uk-width-100" id="payMethod">
                         <?php
                         if ($restaurant->configuration->CashEnabled)
-                            echo('<option value="1">Hotově</option>');
+                            echo('<option value="1" selected="selected">Hotově</option>');
 
                         if ($restaurant->configuration->MPEnabled)
-                            echo(' <option value="3"  selected="selected">MasterPass</option>');
+                            echo(' <option value="3">MasterPass</option>');
 
                         if ($restaurant->configuration->GPEnabled)
                             echo('<option value="2">Kartou online</option>');
@@ -754,4 +757,100 @@
         echo $this->Form->end(); ?>
     </div>
 </div>
+<?php $this->end(); ?>
+
+<?php $this->start('user_edit_modal'); ?>
+    <div id="modal_user_edit" class="uk-modal" data-uk-observe>
+        <div class="uk-modal-dialog uk-modal-dialog-large">
+            <button type="button" class="uk-modal-close uk-close"></button>
+            <div class="uk-modal-header">
+                <h2>Editace uživatele</h2>
+            </div>
+            <div class="uk-container-center">
+                <?php echo $this->Form->create(null, [
+                    'url' => ['controller' => 'Restaurant', 'action' => 'saveuserajax'],
+                    'class' => 'uk-form uk-form-horizontal',
+                    'id' => 'form_user_edit'
+                ]); ?>
+                <fieldset>
+                    <div class="uk-form-row">
+                        <label class="uk-form-label" for="user_fullname">Celé jméno</label>
+
+                        <div class="uk-form-controls">
+                            <input type="text" name="user_fullname" id="user_fullname" placeholder="Celé jméno uživatele"
+                                   class="uk-form-width-large">
+                        </div>
+                    </div>
+                    <div class="uk-form-row">
+                        <label class="uk-form-label" for="user_login">Login</label>
+
+                        <div class="uk-form-controls">
+                            <input type="text" name="user_login" id="user_login" placeholder="Login pro přihlášení"
+                                   class="uk-form-width-large">
+                        </div>
+                    </div>
+                    <div class="uk-form-row">
+                        <label class="uk-form-label" for="user_password">Heslo</label>
+
+                        <div class="uk-form-controls uk-form-password">
+                            <div class="uk-form-password">
+                                <input type="password" name="user_password" id="user_password" placeholder="Heslo pro přihlášení"
+                                   class="uk-form-width-large">
+                                <a href="" class="uk-form-password-toggle" data-uk-form-password="">Ukázat</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="uk-form-row">
+                        <label class="uk-form-label" for="user_role">Role</label>
+
+                        <select name="user_role" class="uk-form-width-large" id="user_role">
+                            <option value="1">Obsluha</option>
+                            <option value="2">Manažer</option>
+                        </select>
+                    </div>
+                    <div class="uk-form-row">
+                        <label class="uk-form-label" for="user_checkout">Pokladna</label>
+
+                        <div class="uk-form-controls">
+                            <select name="user_checkout" class="uk-form-width-large" id="user_checkout">
+                                <?php foreach($checkout as $checkout_item):?>
+                                    <option value="<?=$checkout_item->ID?>"><?=$checkout_item->Name?></option>
+                                <?php endforeach;?>
+                            </select>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+
+            <div class="uk-modal-footer uk-margin-small-top">
+                <div class="uk-form-row">
+                    <nav>
+                        <ul class="uk-navbar-nav">
+                            <li>
+                                <button type="button"
+                                        class="uk-button uk-button-danger uk-button-large uk-modal-close">
+                                    Zavřít
+                                </button>
+                            </li>
+                        </ul>
+
+                        <div class="uk-navbar-flip">
+                            <ul class="uk-navbar-nav">
+                                <li>
+                                    <button type="submit" class="uk-button uk-button-primary uk-button-large"
+                                            onclick="">
+                                        Uložit
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="uk-navbar-content uk-navbar-center"></div>
+                    </nav>
+                </div>
+            </div>
+            <?= $this->Form->hidden('user_id', ['id' => 'user_id']); ?>
+            <?= $this->Form->hidden('restaurant_id', ['id' => 'restaurant_id', 'value' => $restaurant->ID]); ?>
+            </form>
+        </div>
+    </div>
 <?php $this->end(); ?>

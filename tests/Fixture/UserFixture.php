@@ -30,6 +30,7 @@ class UserFixture extends TestFixture
         'Password' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'fixed' => null],
         'Role' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'Checkout_ID' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+        'Restaurant_ID' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['ID'], 'length' => []],
         ],
@@ -52,7 +53,8 @@ class UserFixture extends TestFixture
             'Login' => 'Lorem ipsum dolor sit amet',
             'Password' => 'Lorem ipsum dolor sit amet',
             'Role' => 1,
-            'Checkout_ID' => 1
+            'Checkout_ID' => 1,
+            'Restaurant_ID' => 1
         ],
     ];
 }

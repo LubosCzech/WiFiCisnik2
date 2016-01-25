@@ -5,6 +5,8 @@
         <li><?= $this->Form->postLink(__('Delete User'), ['action' => 'delete', $user->ID], ['confirm' => __('Are you sure you want to delete # {0}?', $user->ID)]) ?> </li>
         <li><?= $this->Html->link(__('List User'), ['action' => 'index']) ?> </li>
         <li><?= $this->Html->link(__('New User'), ['action' => 'add']) ?> </li>
+        <li><?= $this->Html->link(__('List Checkout'), ['controller' => 'Checkout', 'action' => 'index']) ?> </li>
+        <li><?= $this->Html->link(__('New Checkout'), ['controller' => 'Checkout', 'action' => 'add']) ?> </li>
     </ul>
 </nav>
 <div class="user view large-9 medium-8 columns content">
@@ -33,6 +35,10 @@
         <tr>
             <th><?= __('Checkout ID') ?></th>
             <td><?= $this->Number->format($user->Checkout_ID) ?></td>
+        </tr>
+        <tr>
+            <th><?= __('Restaurant ID') ?></th>
+            <td><?= $this->Number->format($user->Restaurant_ID) ?></td>
         </tr>
     </table>
 </div>

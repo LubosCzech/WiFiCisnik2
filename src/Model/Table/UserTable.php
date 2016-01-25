@@ -65,6 +65,11 @@ class UserTable extends Table
             ->add('Checkout_ID', 'valid', ['rule' => 'numeric'])
             ->allowEmpty('Checkout_ID');
 
+        $validator
+            ->add('Restaurant_ID', 'valid', ['rule' => 'numeric'])
+            ->requirePresence('Restaurant_ID', 'create')
+            ->notEmpty('Restaurant_ID');
+
         return $validator;
     }
 }

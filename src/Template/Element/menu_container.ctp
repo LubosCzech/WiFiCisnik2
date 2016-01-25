@@ -6,7 +6,7 @@
                     <ul id="menu_tree" class="uk-nestable"
                         data-uk-nestable="{group:'menu', handleClass:'uk-nestable-handle',maxDepth:2}">
                         <?php foreach ($menu as $category_item): ?>
-                            <li class="uk-nestable-item">
+                            <li class="uk-nestable-item" data-id="<?=$category_item->ID?>">
                                 <div class="uk-nestable-panel">
                                     <i class="uk-nestable-handle uk-icon uk-icon-bars uk-margin-small-right"></i>
 
@@ -15,7 +15,7 @@
                                 </div>
                                 <ul class="uk-nestable-list">
                                     <?php foreach ($category_item->Products as $product_item): ?>
-                                        <li class="uk-nestable-item">
+                                        <li class="uk-nestable-item" data-id="<?=$product_item->ID?>">
                                             <div class="uk-nestable-panel">
                                                 <i class="uk-nestable-handle uk-icon uk-icon-bars uk-margin-small-right"></i>
 
@@ -44,7 +44,7 @@
                             }
                             if (!$inMenu):
                                 ?>
-                                <li class="uk-nestable-item">
+                                <li class="uk-nestable-item" data-id="<?=$category_item->ID?>">
                                     <div class="uk-nestable-panel">
                                         <i class="uk-nestable-handle uk-icon uk-icon-bars uk-margin-small-right"></i>
 
@@ -74,7 +74,7 @@
                             }
                             if (!$inMenu):
                                 ?>
-                                <li class="uk-nestable-item">
+                                <li class="uk-nestable-item" data-id="<?=$product_item->ID?>">
                                     <div class="uk-nestable-panel">
                                         <i class="uk-nestable-handle uk-icon uk-icon-bars uk-margin-small-right"></i>
 
@@ -93,22 +93,9 @@
         </div>
     </div>
     <div class="uk-panel uk-margin-large-top">
-        <?= $this->Form->button('Uložit', ['class' => 'uk-button uk-button-primary uk-button-large']) ?>
+        <?= $this->Form->button('Uložit', ['class' => 'uk-button uk-button-primary uk-button-large','onClick'=>'saveMenu()']) ?>
     </div>
 </div>
-<script>
-    jQuery(function ($) {
-        $('.uk-nestable').on({
-            'start.uk.nestable': function () {
-                console.log('start', arguments);
-            },
-            'move.uk.nestable': function () {
-                console.log('move', arguments);
-            },
-            'change.uk.nestable': function () {
-                console.log('change', arguments);
 
-            }
-        });
-    });
-</script>
+<?= $this->element('scripts');?>
+<?= $this->fetch('restaurant_admin') ?>
